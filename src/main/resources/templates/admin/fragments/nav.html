@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+</head>
+
+<body>
+  <div th:fragment="nav">
+  	
+    <nav class="navbar navbar-expand-sm navbar-light bg-light " style="font-size: 25sp;font-family: Arial, Helvetica, sans-serif; color: black;">
+      <a class="navbar-brand" th:href="@{/}" href="#">
+
+        <img th:src="@{/img/logo.png}" src="img/logo.png" width="auto" height="80" class="d-inline-block align-top"
+          alt="WWW SHOP" />
+      </a>
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!--  menu -->
+      <div class="collapse navbar-collapse" id="collapsibleNavId" th:if="${currentCustomerId ==1}">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0 font-weight-bold" style="font-size: 20px;	">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/customers}">Manager Customer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/products}">Manager Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/admin/categories}">Manager Category</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"th:href="@{/admin/orders}">Manager Order</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/customer/}">Manager Profile</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+      <!--  end menu -->
+      
+            <!--  menu -->
+      <div class="collapse navbar-collapse" id="collapsibleNavId" th:if="${currentCustomerId !=1}">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0 font-weight-bold" style="font-size: 20px;	">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Category</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"th:href="@{/orders/}">Order</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/customer/}">Profile</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+      <!--  end menu -->
+    </nav>
+  </div>
+</body>
+
+</html>

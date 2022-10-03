@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{admin/dashboardLayout.html}">
+<title>Home Page</title>
+
+<head>
+
+</head>
+<body>
+    <section class="col-12 mt-5 mb-5" layout:fragment="content">
+        <hr class="mt-0 mb-4">
+        <form action="@{/updateProfile}">
+        <div class="row">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2"
+                            src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                        <!-- Profile picture help block-->
+                        <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                        <!-- Profile picture upload button-->
+                        <button class="btn btn-primary" type="button">Upload new image</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Account Details</div>
+                    <div class="card-body">
+                        <form>
+                            <!-- Form Group (username)-->
+                            <input type="hidden" name="customerId" th:value="${customerId}">
+                            <div class="mb-3">
+                                <label class="small mb-1" for="name">Name</label>
+                                <input class="form-control" id="name" type="text"
+                                    placeholder="Enter your Name" th:value="${customer.name}">
+                            </div>
+                        
+                            <!-- Form Group (email address)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="email">Email address</label>
+                                <input class="form-control" id="email" type="email"  th:value="${customer.email}"
+                                    placeholder="Enter your email address" value="name@example.com">
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="phone">Phone number</label>
+                                    <input class="form-control" id="phone" type="text"  th:value="${customer.phone}"
+                                        placeholder="Enter your phone number" value="0555-123-456">
+                                </div>
+                                
+                            </div>
+                            <!-- Save changes button-->
+                            <button class="btn btn-primary" type="submit" >Save changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Add Modal to go to cart-->
+    <!-- Modal: modalAbandonedCart-->
+<!-- Modal: modalAbandonedCart-->
+
+</section>
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+
+</head>
+<body>
+    <div th:fragment="header">
+      
+      <div class="row h-100 justify-content-center align-items-center bg-warning text-white" id="navbartop">
+              <a class="p-1 text-dark font-weight-bold ml-2 mr-2" href="tel:0362797727" style= "font-size: 20px;">HotLine: 0362797727</a>
+              <a class="p-1 text-dark font-weight-bold  ml-2 mr-2" href="#" style= "font-size: 20px;">Support 24/7</a>
+              <a class="p-1 text-dark font-weight-bold  ml-2 mr-2" href="#" style= "font-size: 20px;">High-quantity Product</a>
+              <a class="p-1 text-dark font-weight-bold  ml-2 mr-2" href="#" style= "font-size: 20px;">Safe Payment</a>
+              <a class="p-1 text-dark font-weight-bold  ml-5  float-right" href="#" style= "font-size: 20px;" th:href="@{/loginTest}" th:text="${currentCustomerId == 1 ? 'Login' : currentCustomerId }">Login/Logout </a>
+              <a class="p-1 text-dark font-weight-bold  ml-2 mr-2" th:href="@{/shoppingCart}" style= "font-size: 25px;"><i class="fas fa-shopping-cart"></i></a><p class="text-center" th:unless="${shoppingCart.itemsNumber} ==0" th:text="${shoppingCart.itemsNumber}" style= "font-size: 20px;color: black;">Sốluowjgn</p>
+              
+        </div>
+	</div>
+</body>
+</html>
+

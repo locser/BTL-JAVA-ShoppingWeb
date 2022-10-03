@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}"
+    >
+  <head>
+    <title >Add and Edit Products</title>
+
+  </head>
+  <body>
+    <section class="row col-12" layout:fragment="content">
+      <div class="col-12  mt-4">
+        <form action="/admin/products/saveAndUpdate" method="post" enctype="multipart/form-data"
+            th:object="${product}">
+        <div class="card">
+          <div class="card-header">
+            <h2 th:text="${product.isEdit ? 'Edit Product' : 'Add New Product'}">Add New Product</h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-7">
+                <div class="form-group" th:if="${product.isEdit}">
+                  <input type="hidden" th:field="*{isEdit}">
+                  <label for="productId">Product ID:</label>
+                  <input type="text" class="form-control" name="productId" id="productId" 
+                  th:field="*{productId}"  aria-describedby="productIdhelpId" placeholder="ProductId">
+                  <small id="productIdhelpId" class="form-text text-muted">Product id is required</small>
+                </div>
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" name="name" id="name"
+                  th:field="*{name}" aria-describedby="namehelpId" placeholder="Name">
+                  <small id="namehelpId" class="form-text text-muted" required="true">Name is required</small>
+                </div>
+                <div class="form-group">
+                  <label for="quantity">Quantity</label>
+                  <input type="text" class="form-control" name="quantity" min="1" th:value=1
+                  th:field="*{quantity}" id="quantity" aria-describedby="quantityhelpId" placeholder="Quantity">
+                  <small id="quantityhelpId" class="form-text text-muted">Quantity is required</small>
+                </div>
+                <div class="input-group form-group">
+                  <span class="input-group-text">Unit Price</span>
+                  <input type="number" name="unitPrice" id="unitPrice" class="form-controll" 
+                  th:field="*{unitPrice}" placeholder="Unit Price" min="1">
+                  <span class="input-group-text">VND</span>
+                </div>
+                <div class="form-group">
+                  <label for="categoryId">Category</label>
+                    <select class="form-control" name="categoryId" id="categoryId" 
+                    th:field="*{categoryId}">
+                      <option th:each="item : ${categories}" th:value="${item.categoryId}"
+                       th:text="${item.name}" th:selected="${item.categoryId == product.categoryId}">
+                      Category Name</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                  <label for="category">Status</label>
+                    <select class="form-control" name="status" id="status" 
+                    th:field="*{status}">
+                      <option value="0">Đã ngừng</option>
+                      <option value="1">Đang bán</option>
+                      </select>
+                </div>
+              </div>
+              
+              <div class="col-5">
+                  <script>
+                    function chooseFile(fileInput){
+                      if (fileInput.files && fileInput.files[0]){
+                        var reader = new FileReader();
+
+                        reader.onload=function (e){
+                          $("#image").attr('src', e.target.result);
+                        }
+
+                        reader.readAsDataURL(fileInput.files[0]);
+                      }
+                    }
+                  </script>
+                <img  id="image" th:src="${product.image !=null ? '/admin/products/images/' + product.image : 'images/noimage.png'}" width="270" 
+                   src="/images/noimage.png" alt="Chọn ảnh cho sản phẩm">
+                <div class="form-group">
+                  <label for="productImage">Image File</label>
+                  <input type="file" onchange="chooseFile(this)"
+                    class="form-control" name="imageFile" id="productImage" aria-describedby="productImagehelpId" placeholder="Image File">
+                  <small id="productImagehelpId" class="form-text text-muted">Product image is required</small>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <textarea class="form-control" name="description" id="description"  th:field="*{description}"  aria-describedby="descriptonhelpId"  placeholder="Description"></textarea>
+                      <small  id="descriptonhelpId" class="form-text text-muted">Name is required</small>
+                      
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              
+            </div>
+          <div class="card-footer text-muted">
+              <button th:href="@{/admin/product/add}" class="btn btn-outline-success">New</button>
+              <button class="btn btn-primary" th:text="${product.isEdit ? 'Update' : 'Save'}">Save</button>
+              <button type="reset" class="btn btn-outline-danger">Reset</button>
+          </div>
+        </div>
+      </form>
+      </div>
+  </section>
+
+  </body>
+</html>

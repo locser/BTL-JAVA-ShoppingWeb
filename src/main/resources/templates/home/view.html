@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}">
+    <title>Product Detail</title>
+<head>
+</head>
+
+<body>
+    <section class="row col-12  ml-1 mt-4 mb-4" layout:fragment="content">
+        <div class="container bg-light" th:object="${product}">
+            <div class="row ">
+                <div class="col-12 large-9 p-3">
+                    <div class="product-main mt-5 mb-3" >
+                        <div class="form-group">
+                            <!-- aarnh ben trai san pham-->
+                            <form action="/addToCart" method="post" class="form-controll">
+                                <div class="row">
+                                    <div class="large-6 col-6">
+                                        <img  id="image" th:src="${product.image !=null ? '/admin/products/images/' + product.image : 'images/noimage.jpg'}" width="500" 
+                                        src="/images/noimage.png" alt="ảnh cho sản phẩm">
+                                    </div>
+            
+                                    <!--right teen san phaarm gia ca-->
+                                    <div class="col-6" >
+                                        <input type="hidden" name="productId" id="productId" th:value="${product.productId}">
+                                        
+                                        <h1 class="col-12 mt-2 mb-2" th:text="${product.name}" name="name" id="name"
+                                            style="color: gray; ">
+                                        </h1>
+                                        <span class="col-12 mt-2 mb-2" style="color: red; font-size: 25px;" th:text="${product.unitPrice} + ' đ'" id="unitPrice"
+                                            name="unitPrice">&nbsp;
+                                        </span>
+                                        
+                                        <p class="col-12 font-weight-bold mt-2 mb-2" style="color: green; font-size: 25px;" th:text="${product.status !=0 ? 'Trạng thái:   Đang bán' : 'Trạng thái:    Đã ngừng'}" name="status" id="status">
+                                            Còn hàng
+                                        </p>
+                                        <input style="color: green; font-size: 25px;" type="number" class="input-text form-group ml-3 mt-2 mb-2" step="1" min="1" th:max="${product.quantity}"
+                                            id="quantity" th:name="quantity" value="1" title="SL" size="4" pattern="[0-9]*">
+                                            <!-- TODO: nút mua vào giỏ hàng-->
+                                        <!-- TODO: go to danh mục   
+                                            12:31 ngafy 12, test button                                           
+                                            -->
+                                            <div>
+                                                <a href=""  style="color: white;font-size: 25px;" class="btn btn-success ml-3 mt-3" th:href="@{'/shoppingCart/buynow/checkout/' + ${product.productId}}"
+                                                th:if="${product.status ==1}">Buy now</a>
+                                            </div>
+                                            <div class="mt-3 ml-3">
+                                                <button type="submit" class="btn btn-info" style="color: white;font-size: 25px;" th:if="${product.status ==1}">Add to Cart</button>
+                                            </div>
+                                        <span style="color: green; font-size: 30px;" class="m-3 b">Danh mục: <a class=" btn btn-outline bg-warning m-3" name="categoryId" id="categoryId" href="" th:text="${product.category.name}">Dây chuyền mặt đá</a></span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- TODO: description bug 
+                        
+                            -->
+                        <div class="line"></div>
+                        <hr>
+                          
+                        <div class="row mt-3 mb-3 ml-3">
+                            <a href="" style=" text-transform: uppercase; color: black; text-decoration: none;background-color: yellow; font-size: 25px;">Mô tả sản phẩm</a>
+                            <div class="col-12">
+                                <span id="description" name="description" th:text="${product.description}" style="color: black; font-size: 25px;" ></span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mt-5">
+                            <p class="title-bl font-weight-bold">Bình luận hoặc đặt câu hỏi về sản phẩm</p>
+                            <div class="fb-comments fb_iframe_widget fb_iframe_widget_fluid_desktop" xid="453 data-numposts=" 20
+                                data-width="100%" data-colorscheme="light" data-version="v2.3" style="width: 100%;"
+                                fb-xfbml-state="rendered"
+                                fb-iframe-plugin-query="app_id=104537736801666&amp;color_scheme=light&amp;container_width=840&amp;height=100&amp;href=http%3A%2F%2Fmixi.khothemedep.com%2Fsan-pham%2Fmat-day-ho-ly-thach-anh-vang-vip-boc-bac%2F&amp;locale=vi_VN&amp;sdk=joey&amp;title=M%E1%BA%B7t%20D%C3%A2y%20H%E1%BB%93%20Ly%20Th%E1%BA%A1ch%20anh%20v%C3%A0ng%20VIP%20b%E1%BB%8Dc%20b%E1%BA%A1c%20-%20Website%20b%C3%A1n%20v%E1%BA%ADt%20ph%E1%BA%A9m%20phong%20th%E1%BB%A7y%20Mixi&amp;url=http%3A%2F%2Fmixi.khothemedep.com%2Fsan-pham%2Fmat-day-ho-ly-thach-anh-vang-vip-boc-bac%2F&amp;version=v2.3&amp;width=&amp;xid=453%20data-numposts%3D">
+                                <span style="vertical-align: bottom; width: 100%; height: 554px;">
+                                    <iframe name="f3295189fc3144" width="1000px" height="550px"
+                                        data-testid="fb:comments Facebook Social Plugin" title="fb:comments Facebook Social Plugin"
+                                        frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no"
+                                        allow="encrypted-media"
+                                        src="https://web.facebook.com/v2.9/plugins/comments.php?app_id=104537736801666&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df33874c75acdf78%26domain%3Dmixi.khothemedep.com%26is_canvas%3Dfalse%26origin%3Dhttp%253A%252F%252Fmixi.khothemedep.com%252Ffef3c07c12e7ac%26relation%3Dparent.parent&amp;color_scheme=light&amp;container_width=840&amp;height=100&amp;href=http%3A%2F%2Fmixi.khothemedep.com%2Fsan-pham%2Fmat-day-ho-ly-thach-anh-vang-vip-boc-bac%2F&amp;locale=vi_VN&amp;sdk=joey&amp;title=M%E1%BA%B7t%20D%C3%A2y%20H%E1%BB%93%20Ly%20Th%E1%BA%A1ch%20anh%20v%C3%A0ng%20VIP%20b%E1%BB%8Dc%20b%E1%BA%A1c%20-%20Website%20b%C3%A1n%20v%E1%BA%ADt%20ph%E1%BA%A9m%20phong%20th%E1%BB%A7y%20Mixi&amp;url=http%3A%2F%2Fmixi.khothemedep.com%2Fsan-pham%2Fmat-day-ho-ly-thach-anh-vang-vip-boc-bac%2F&amp;version=v2.3&amp;width=&amp;xid=453%20data-numposts%3D"
+                                        style="border: none; visibility: visible; width: 100%; height: 204px;" class="">
+                                    </iframe></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+

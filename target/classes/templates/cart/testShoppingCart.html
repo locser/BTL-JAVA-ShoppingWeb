@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/dashboardLayout.html}">
+<title>Shop Cart</title>
+
+<head>
+</head>
+
+<body>
+	<section layout:fragment="content" class="row col-12  m-2 h-100"
+		style="height: 750px; background-color: #eee; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+		<div class="col-12  m-2">
+			<div class="card-body w-100 col-12">
+
+				<div id="cart" class="tabcontent">
+					<div class="col-12">
+						<div class="row">
+							<div class="row col-12 m-3 font-weight-bold" style="font-size: 25px;"  th:if="${shoppingCart.itemsNumber !=0}">
+								TOTAL:&emsp;&emsp;
+								<p class="mb-0 font-weight-bold"
+									style="color: rgb(183, 52, 29);" name="itemsNumber"
+									th:text="${shoppingCart.itemsNumber} +' Product'"></p>
+							</div>
+								
+
+								<!-- Nếu mà giỏ hàng có sản phẩm sẽ hiện thị form danh sách. or không sẽ hiện ảnh no prod-->
+							<div class=" table-responsive shopping-cart"
+								style="background-color: #fff; font-size: 20px;" th:if="${shoppingCart.itemsNumber !=0}">
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Product</th>
+											<th class="text-center">Quantity</th>
+											<th class="text-center">Subtotal</th>
+											<th class="text-center"></th>
+											<th class="text-center"><a
+												class="btn btn-sm btn-outline-danger clear"
+												th:href="@{/clearShoppingCart}">Clear </a></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="cartItem : ${shoppingCart.cartItems}">
+											<td>
+												<div class="row product-item">
+													<a class="col-3 product-thumb" href="#"> <img
+														id="image"
+														th:src="${cartItem.product.image !=null ? ('/admin/products/images/' + cartItem.product.image) : 'images/noimage.png'}"
+														src="/images/noimage.png" height="150" width="150"
+														alt="Product Image"
+														style="border: 1px solid #555; border-radius: 5px;"></a>
+													<div class="colfa-rotate-180 product-info">
+														<h2 class="product-title">
+															<a href="#"
+																th:href="@{'/view/'+  ${cartItem.product.productId}}">[[${cartItem.product.name}]]</a>
+														</h2>
+														<span style="font-size: 25px;"><em>Price: </em>[[${cartItem.product.unitPrice}]]
+															đ </span>
+													</div>
+												</div>
+											</td>
+											<td class="text-center" >
+												<form action="/updateShoppingCart" method="post">
+													<input type="hidden" th:value="${cartItem.cartItemId}"
+														name="cartItemId" />
+													<div
+														class="input-group justify-content-center align-items-center">
+														<input type="number" name="quantity"
+															th:value="${cartItem.quantity}"
+															th:attr="max=${cartItem.product.quantity}" min="1"
+															class="form-control round-input form-control-sm"
+															width="100"style="font-size: 25px;" />
+														<button class="btn btn-success btn-sm btn-custom"
+															type="submit">
+															<i class="fa fa-check"></i>
+														</button>
+													</div>
+												</form>
+											</td>
+
+											<td class="text-center text-lg text-medium"
+												style="font-size: 25px;">[[${cartItem.product.unitPrice
+												* cartItem.quantity}]] VND</td>
+											<td class="text-center text-lg text-medium"
+												style="font-size: 25px;"></td>
+											<td class="text-center" style="font-size: 25px;"><a
+												class="remove-from-cart"
+												th:href="@{'/removeCartItem/' + ${cartItem.cartItemId}}"
+												data-toggle="tooltip"><i class="fa fa-trash"></i></a></td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+
+
+							<div class="shopping-cart-footer mt-3 mb-3"
+								style="font-size: 25px;" th:if="${shoppingCart.itemsNumber !=0}">
+								<div class="row">
+									<div class="col-4">
+										<a class="btn btn-outline-secondary back" href="/"><i
+											class="fas fa-arrow-left"></i>&nbsp;Back to Shopping</a>
+									</div>
+									<div class="col-4 text-lg">
+										<b>Subtotal: <span class="text-medium">$[[${shoppingCart.totalPrice}]]</span></b>
+									</div>
+									<div class="col-4 cart-button">
+
+										<a class="btn checkout btn-success"
+											th:if="${shoppingCart.itemsNumber} !=0" th:href="@{'/shoppingCart/checkout'}">CheckOut</a>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<!-- Nếu mà giỏ hàng không có ảnh sẽ hiện ảnh no prod-->
+						<div class="row m-3 justify-content-center" th:if="${shoppingCart.itemsNumber == 0}" style="width: 80%;" >
+							<div class="card text-center">
+								<div class="card-header bg-danger" style="font-size: 28px;">
+								  Shopping Cart is Empty
+								</div>
+								<div class="card-body bg-light">
+								  <img src="/img/noProductIncart.png" alt="noProductIncart">
+								  <h3>Find the product you want to buy and come back here</h3>
+								</div>
+								<div class="card-footer text-muted">
+								  <a href="" th:href="@{/}" class="btn btn-outline-success  bg-light font-weight-bold" style="font-size: 28px;" >&#8592; Back to Shopping</a>
+								</div>
+							  </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

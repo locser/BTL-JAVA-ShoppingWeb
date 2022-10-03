@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{admin/dashboardLayout.html}">
+<title>Home Page</title>
+
+<head>
+
+</head>
+
+<body>
+  <section class="row m-2" layout:fragment="content" style="font-family:serif ;">
+    <div class="container-fluid m-4">
+      <!-- List of category and Carousel-->
+      <div class="row">
+        <div class="col-2 mt-4" style="font-family:serif ;">
+          <div class="card mb-4">
+            <div class="card-header h3 bg-warning font-weight-bold" data-toggle="collapse"
+              data-target="#collapseExample3" aria-expanded="false">Categories</div>
+
+            <div class="card-body p collapse show" id="collapseExample3">
+              <!--get and set All categories-->
+              <div class="list-group list-group-flush font-weight-bold " th:each="cate,iStat : ${categories} ">
+                <a href="#" th:href="@{'/searchProductByCategory/' + ${cate.categoryId}}"
+                  class="list-group-item list-group-item-action h5" th:text="${cate.name}">Vòng Tay</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class=" col-7">
+          <div id="carouselExampleControls" class="carousel slide mt-4" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img th:src="@{/img/carousel6.jpg}" src="/img/noimage.png" width="100%" height="550" alt="carou1">
+              </div>
+              <div class="carousel-item">
+                <img th:src="@{/img/carousel4.jpg}" src="/img/noimage.png" width="100%" height="550" alt="carou2">
+              </div>
+              <div class="carousel-item">
+                <img th:src="@{/img/carousel5.jpg}" src="/img/noimage.png" width="100%" height="550" alt="carou2">
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-3 mt-4 ">
+          <div class="row" style="font-size: 25px;">
+            <ul class="list-group w-100">
+              <li class="list-group-item list-group-item-warning">5 SALE COMMITMENT ®</li>
+              <li class="list-group-item"><i class="fa-xs fas fa-star" style="color:red"></i>
+
+                Best price, cheapest market</li>
+              <li class="list-group-item"><i class="fa-xs fas fa-star" style="color:red"></i>
+                Committed to providing high-quality products</li>
+              <li class="list-group-item"><i class="fa-xs fas fa-star" style="color:red"></i>
+                Advice and detailed instructions for use</li>
+              <li class="list-group-item"><i class="fa-xs fas fa-star" style="color:red"></i>
+                Free shipping all over Vietnam</li>
+              <li class="list-group-item"><i class="fa-xs fas fa-star" style="color:red"></i>
+                Customer care 24 hours a day</li>
+
+
+            </ul>
+            <div class="text-center align-items-center m-3" style="font-size: 25px; color: white;">
+              <a href="tel:0362797727" title="Call to Buy in Ho Chi Minh City">
+                <span style="color: white; font-size: 25px;"><span
+                    style="color: white; font-size: 25px;">0362797727</span>
+                  (TPHCM)
+                </span>
+              </a>
+              <br>
+              <span style="color: rgb(192, 101, 206); font-size: 23px; width: 100%;">Hotline : 08:00 AM-22:00PM (Every
+                Day)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Left: Category and search-->
+      <div class="row mb-5 mt-5">
+        <div class="col-md-2">
+          <!-- search Price max Min-->
+          <!-- search name-->
+          <div class="card border-1 b-3 mb-3">
+            <div class="card-header p-2 bg-warning" data-toggle="collapse" data-target="#collapseExample4"
+              aria-expanded="false" style="background-color: yellow;">
+              <p class="m-0 h3 font-weight-bold">Search by Name</p>
+            </div>
+            <div class="card-body p collapse show bg-light" id="collapseExample4">
+              <form th:action="@{/searchProductFromHomepage}">
+                <div class="form-inline float-left">
+                  <label for="name">Name:</label>
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Search by Name">
+                  <button class="btn btn-outline-primary">Search</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!-- search Price-->
+          <div class="card border-1 b-3">
+            <div class="card-header p-2 bg-warning" data-toggle="collapse" data-target="#collapseExample4"
+              aria-expanded="false" style="background-color: yellow;">
+              <p class="m-0 h3 font-weight-bold">Search by Price</p>
+            </div>
+            <div class="card-body p collapse show  bg-light" id="collapseExample4">
+              <form th:action="@{/searchProductByPrice}">
+                <div class="form-group">
+                  <label>Min</label>
+                  <input class="form-row" name="minPrice" placeholder="0 &#8363;" type="number" width="100" min="0"
+                    value="0">
+                </div>
+                <div class="form-group">
+                  <label>Max</label>
+                  <input class="form-row" name="maxPrice" placeholder="1,0000 &#8363;" type="number" width="100" min="0"
+                    value="0">
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!--Right: List Products-->
+        <div class="col-md-7">
+          <div class="card">
+            <!--card header-->
+            <div class="card-header">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="btn-group" role="group">
+                    <h2 style="color:black ;">List Of Product</h2>
+                  </div>
+                </div>
+                <!--<div class="card-header bg-success font-weight-bold text-center" style="font-size: 20px;">List Of Products</div>-->
+                <!--TODO: phân trang và sort-->
+                <div class="col-md-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Sort By:</span>
+                    </div>
+                    <select class="form-control" id="" name="selectSort">
+                      <option value="No">No Sort</option>
+                      <option value="nameAsc"> Name (A - Z)</option>
+                      <option value="nameDesc">Name (Z - A)</option>
+                      <option value="priceAsc">Price (Low &gt; High)</option>
+                      <option value="PriceDesc">Price (High &gt; Low)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Show:</span>
+                    </div>
+                    <select class="form-control" id="" name="">
+                      <option value="">5</option>
+                      <option value="">10</option>
+                      <option value="">50</option>
+                      <option value="">75</option>
+                      <option value="">100</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--product details-->
+            <div class="card-body">
+              <div class="row">
+                <!-- one product -->
+                <div class="col-md-4 mb-4" th:each="product,iStat : ${products}">
+                  <div class="card">
+                    <form action="/addToCart" method="post">
+
+                      <input type="hidden" name="productId" th:value="${product.productId}">
+                      <input type="hidden" name="quantity" th:value="1">
+
+                      <!-- Image Pro -->
+                      <img id="image"
+                        th:src="${product.image !=null ? '/admin/products/images/' + product.image : 'img/noimage.png'}"
+                        src="/images/noimage.png" height="250" width="100%" alt="Product Image"
+                        style="border: 1px solid #555; border-radius: 5px;">
+                      <!--<img class="card-img-top" src="https://via.placeholder.com/200x200" /> -->
+                      <div class="card-body">
+                        <!--  Pro  Category-->
+                        <p class="h5" style="height: 60px;"><small class="text-muted" style="font-size: 18px;"
+                            th:text="${product.category.name}">Vòng tay</small></br>
+                          <!--TODO:Thêm action xem chi tiết sản phẩm-->
+                          <a th:href="@{'/view/' + ${product.productId}}" th:text="${product.name}"
+                            style="font-size: 22px;"></a>
+                        </p>
+                        <!--Đánh giá -->
+                        <p class="m-0 mt-1">
+                          <i class="fa-xs fas fa-star" style="color:orange"></i>
+                          <i class="fa-xs fas fa-star" style="color:orange"></i>
+                          <i class="fa-xs fas fa-star" style="color:orange"></i>
+                          <i class="fa-xs fas fa-star" style="color:orange"></i>
+                          <i class="fa-xs fas fa-star" style="color:orange"></i>
+                        </p>
+
+                        <!--unitPrice -->
+                        <p class="h5 m-0" th:text="${product.unitPrice}+ ' ' + &#8363;" style="color: red;">VNĐ</p>
+                      </div>
+                      <!--Action with Product -->
+                      <div class="card-footer p-0">
+                        <div class="btn-group" role="group">
+                          <!--Add product to cart -->
+                          <!--TODO:Thêm action add sản phẩm vào cart-->
+                          <button  style="font-size: 25px;" type="submit" class="btn btn-light text-center h4" th:if="${product.status ==1}" >
+                            <i class="fas fa-cart-plus " style="color: green;" > </i> Add To Cart
+                          </button>
+                          <!--Buy product to cart -->
+                          <!--TODO:mua sản phẩm luôn sản phẩm or xem chi tiết-->
+                          <button  style="font-size: 25px;" type="button" class="btn btn-outline-light" th:if="${product.status ==1}" >
+                            <a th:href="@{'/shoppingCart/buynow/checkout/' + ${product.productId}}"> Buy Now</a> </i>
+                          </button>
+                          <!--Thả tym không cần làm-->
+                          <button  style="font-size: 25px;" type="button" class="btn btn-light">
+                            <i class="fas fa-heart"></i>
+                          </button>
+                          <!--refresh-->
+                          <button  style="font-size: 25px;" type="button" class="btn btn-light">
+                            <i class="fas fa-sync-alt" style="color: crimson;"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <!-- one product -->
+              </div>
+            </div>
+            <!--Phân trang-->
+            <div class="card-footer p-3">
+              <div class="row">
+                <div class="col-md-6">
+                  <ul class="pagination m-0">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <p class="text-right mb-0 mt-1">Showing 1 to 12 of 12 (1 Pages)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- trending-->
+        <div class="col-3 bg-light border-radius">
+          <!-- Latest Post -->
+          <div class="widget widget-latest-post mt-2">
+            <div class="widget-title bg-light" style="width: 100%;font-size: 25px;color: rgb(180, 84, 100);">
+                <h2 class="font-weight-bold">Trending Now</h2>
+            </div>
+            <hr>
+           <th:blocked th:each="post : ${posts}"><!-- bai viet 1-->
+            <div class="widget-body ml-3 mt-4 " style="font-size: large; ">
+                <div class="latest-post-aside media">
+                  <div class="row mt-2">
+                    <div class="lpa-left media-body">
+                      <div class="lpa-title">
+                        <!-- ten bai viet-->
+                          <h5><a href="#" style="color: black; font-size: larger;" class="btn-outline-primary" th:text="${post.titlePost}">9 lời dặn phong thủy ai làm được sẽ an nhiên suốt cuộc đời!</a></h5>
+                      </div>
+                      <div class="lpa-meta">
+                                                <!-- admin bai viet-->
+                          <a class="name" href="#">
+                              Admin
+                          </a>
+                                                  <!-- Ngay bai viet-->
+                          <a class="date" href="#">
+                              26 FEB 2020
+                          </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <hr>
+           </th:blocked>
+
+        </div>
+        <!-- End Latest Post -->
+        </div>
+      </div>
+    </div>
+    <!-- blog carousel bottom homepage-->
+
+    <div class="container-fluid">
+      <div class="row mb-5 mr-4 ml-4">
+        <div class="col-md-12 m-2">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <i class="float-left mr-3 fa-3x fas fa-shipping-fast"></i>
+                  <p class="h6">Free shipping & Return <br /><small class="text-muted">For all orders over
+                      1.000.000</small>
+                  </p>
+                </div>
+                <div class="col-md-3">
+                  <i class="float-left mr-3 fa-3x fas fa-thumbs-up"></i>
+                  <p class="h6">Customer Protection <br /><small class="text-muted">From click to delivery.</small></p>
+                </div>
+                <div class="col-md-3">
+                  <i class="float-left mr-3 fa-3x fas fa-umbrella"></i>
+                  <p class="h6">Safe Payment <br /><small class="text-muted">Use world’s most secure payment
+                      methods.</small></p>
+                </div>
+                <div class="col-md-3">
+                  <i class="float-left mr-3 fa-3x fas fa-life-ring"></i>
+                  <p class="h6">Support 24/7 <br /><small class="text-muted">We answer for question all time</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Add Modal to go to cart-->
+    <!-- Modal: modalAbandonedCart-->
+<!-- Modal: modalAbandonedCart-->
+
+  </section>
+
+</body>
+
+</html>

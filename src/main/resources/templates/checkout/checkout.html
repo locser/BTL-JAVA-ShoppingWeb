@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{admin/dashboardLayout.html}">
+<title>Check Order</title>
+
+<head>
+	<style >
+		.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 0 -16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+
+input[type=text] {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+	</style>
+</head>
+
+<body>
+    <section class="row col-12 mt-3 mb-3" layout:fragment="content" style="font-family:serif ; font-size: 25px;">
+               <form action="/shoppingCart/checkout/confirmOrderandSave" method="post">
+    
+        <div class="row col-12">
+        
+            <div class="col-75">
+              <div class="container">
+                  <div class="row bg-light mt-4 mb-4 ml-1 " ><a style="font-size: 25px;" href="" class="btn btn-warning" th:href="@{/shoppingCart}">Back to Shopping Cart</a></div>
+          
+                  <div class="row">
+                    <div class="col-50" >
+                        <th:block >
+                      <h3>Billing Address</h3>
+                      <input type="hidden" id="customerId" name="customerId"  th:value="${customer.customerId != 1 ? customer.customerId : 1}" >
+                      <label for="name"><i class="fa fa-user"></i> Name</label>
+                      <input type="text" id="name" name="name" placeholder="ex: Pham Huu Loc" th:value="${customer.customerId != 1 ? customer.name : ''}">
+                      <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                      <input type="text" id="email" name="email" placeholder="ex: locser.02@gamil.com"  th:value="${customer.customerId != 1 ? customer.email : ''}">
+                      <label for="deliveryAddress"><i class="fas fa-map-marker"></i> Delivery Address</label>
+                      <input type="text" id="deliveryAddress" name="deliveryAddress" th:name="deliveryAddress" placeholder="ex: 120/21 Lý Thường Kiệt Phường 7 Gò Vấp TP.HCM" >
+                      <label for="phone"><i class="fas fa-phone"></i> Phone</label>
+                      <input type="text" id="phone" name="phone" placeholder="ex: 0362797727" th:value="${customer.customerId != 1 ? customer.phone : ''}">
+
+                    </th:block>
+                    </div>
+          
+                    <div class="col-50" >
+                      <h3>Payment</h3>
+                      <!-- paymentmethods-->
+                      <label for="paymentMethod">Payment Methods</label>
+                      <select class="form-control" name="paymentMethod" id="paymentMethod" style="font-size: 25px;" >
+                        <option value="0">Bank transfer</option><!-- thanh toán chuyển khoản trước-->
+                        <option value="1">Payment on delivery</option><!-- thanh taosn khi nhận hàng-->
+                      </select>
+
+                      <div class="row mt-4">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" name="description" id="description"
+                                    placeholder="additional information ex:When, who?" style="font-size: 25px;"></textarea>
+                            </div>
+                        </div>
+                      </div>
+
+                      <label for="discount">Discount</label>
+                      <input type="text" id="discount" name="discount" placeholder="enter 'locser' to get 10% off">
+                    
+                      <label for="discount"></label>
+                      <p class="text-danger">Delivery in 7 days</p>
+                      <p>(*)Your personal information will be used to process orders, enhance your website experience, and for other specific purposes described in the privacy policy.</p>
+                      
+                    </div>
+          
+                  </div>
+                  
+                  <input type="submit" value="Confirm" class="btn btn-outline-success w-100 font-weight-bold mt-3" style="font-size: 28px;">
+              </div>
+            </div>
+          
+            <div class="col-25">
+              <div class="container">
+                <h2 class="font-weight-bold">Cart
+                  <span class="price" style="color:black">
+                    <i class="fa fa-shopping-cart"></i>
+                    <b th:unless="${shoppingCart.itemsNumber} ==0" th:text="${shoppingCart.itemsNumber}">4</b>
+                  </span>
+                </h2>
+                <hr>
+                <th:block th:each="item,iStat : ${shoppingCart.cartItems} ">
+                    <p><a href="#" th:text="${item.product.name} + ' - Amount: ' + ${item.quantity}" th:href="@{'/view/' + ${item.product.productId}}">Product 1</a> <span class="price">[[${item.product.unitPrice} * ${item.quantity}]] đ</span></p>
+					<hr>
+                </th:block>
+                
+                <hr>
+                <p>Total <span class="price" style="color:black"><b th:text="${shoppingCart.totalPrice} + ' đ'"></b></span></p>
+              </div>
+            </div>            
+          </div>
+                          </form>
+          
+    </section>
+</body>
+
+</html>

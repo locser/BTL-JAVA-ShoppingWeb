@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}"
+    >
+  <head>
+    <title >Category</title>
+
+  </head>
+  <body>
+     <section class="row col-12" layout:fragment="content">
+         <div class="col-12  mt-4">
+           <div class="card">
+             <div class="card-header">
+               <h2>List Category</h2>
+             </div>
+             <div class="card-body">
+              <div class="row col-12">
+
+                <div class="float-left col-6">
+                  <a th:href="@{/admin/categories/search}" class="btn btn-sm btn-outline-primary  m-2">Search</a>
+                </div>
+
+                <div class="col-6">
+                  <a th:href="@{/admin/categories/add}" class="btn btn-sm btn-outline-primary float-right m-2">Add a new Category</a>
+                </div>
+              </div>
+               <table class="table table-striped ">
+                 <thead>
+                   <tr>
+                     <th>ID</th>
+                     <th>Name</th>
+                     <th>OPtion</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr th:each="category: ${categories}">
+                     <td scope="row">[[${category.categoryId}]]</td>
+                     <td th:text="${category.name}"></td>
+                     <td>
+                       <a th:href="@{'/admin/categories/view/'+ ${category.categoryId}}" class="btn btn-outline-info"><i class="fas fa-info"></i></a>
+                       <a th:href="@{'/admin/categories/edit/'+ ${category.categoryId}}" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                       <a th:href="@{'/admin/categories/delete/'+ ${category.categoryId}}"  class="btn btn-outline-danger" 
+                       	onclick="if(!(confirm('Are you sure you want to delete?'))) return false"><i class="fas fa-recycle"></i></a>
+                     </td>
+                   </tr>
+                 </tbody>
+               </table>
+             </div>
+             <div class="card-footer text-muted">
+               <nav aria-label="Page navigation">
+                 <ul class="pagination justify-content-center">
+                   <li class="page-item disabled">
+                     <a class="page-link" href="#" aria-label="Previous">
+                       <span aria-hidden="true">&laquo;</span>
+                       <span class="sr-only">Previous</span>
+                     </a>
+                   </li>
+                   <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                   <li class="page-item"><a class="page-link" href="#">2</a></li>
+                   <li class="page-item">
+                     <a class="page-link" href="#" aria-label="Next">
+                       <span aria-hidden="true">&raquo;</span>
+                       <span class="sr-only">Next</span>
+                     </a>
+                   </li>
+                 </ul>
+               </nav>
+             </div>
+           </div>
+           
+           
+         </div>
+     </section>
+  </body>
+</html>
+
